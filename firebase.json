@@ -1,0 +1,8 @@
+{
+  "firestore": { "rules": "firestore.rules" },
+  "hosting": {
+    "site": "traverse-59b13",
+    "public": "prototype",
+    "ignore": ["README.md", "benchmark.html", "benchmark.js"]
+  }
+}

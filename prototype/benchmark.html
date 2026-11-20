@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Traverse · Tutor comparison</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="config.js?v=2" defer></script>
+  <script src="hint-cases.js" defer></script>
+  <script src="benchmark.js?v=12" defer></script>
+</head>
+<body>
+  <header class="masthead"><a class="brand" href="./index.html">Traverse</a></header>
+  <main class="layout">
+    <h1>Tutor comparison</h1>
+    <label class="field" for="case">Exercise</label>
+    <select id="case">
+      <option value="restaurant">Restaurant · service capacity</option>
+      <option value="maintenance">Maintenance · shorter stoppages</option>
+      <option value="bus">Urban policy · traffic counts</option>
+    </select>
+    <p class="scenario" id="case-facts"></p>
+    <p>Both models get the same exercise, answer and instruction. The cloud run sends the two fields below to Gemini.</p>
+    <form id="comparison">
+      <label class="field" for="reason">Learner’s explanation</label>
+      <input id="reason" maxlength="160" value="The road closure may divert cars onto other streets.">
+      <label class="field" for="plan">Learner’s test</label>
+      <textarea id="plan" maxlength="360" required rows="3">I would count cars on neighboring streets too and compare the total before and after.</textarea>
+      <div id="debug-field" hidden>
+        <label class="field" for="debug-token">Temporary App Check debug token</label>
+        <input id="debug-token" type="password" autocomplete="off">
+      </div>
+      <button id="run" type="submit">Run 3 times per model</button>
+      <button class="secondary" id="run-local" type="submit">Run 3 times on device only</button>
+      <button class="secondary" id="run-cloud" type="submit">Run 3 times in the cloud only</button>
+    </form>
+    <p id="setup" role="status"></p>
+    <section id="results" hidden aria-label="Inference results">
+      <div class="feedback"><strong>Gemini Nano · on-device only</strong><ol id="local" aria-live="polite"></ol></div>
+      <div class="feedback cloud"><strong>Gemini · cloud only</strong><ol id="cloud" aria-live="polite"></ol></div>
+    </section>
+    <details>
+      <summary>How to score the two hints</summary>
+      <p>The restaurant and maintenance use pre-scored hints. The benchmark checks the selected ID against the case rubric and shows a written fallback when it fails.</p>
+      <ul id="rubric"></ul>
+    </details>
+    <button class="secondary" id="check-device" type="button">Check Chrome’s local model</button>
+    <button class="secondary" id="prepare-device" type="button" hidden>Download Chrome’s local model</button>
+    <p id="device" role="status"></p>
+  </main>
+</body>
+</html>

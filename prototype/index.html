@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#191b1b">
+  <title>Traverse · Reason across disciplines</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="config.js" defer></script>
+  <script src="hint-cases.js?v=16" defer></script>
+  <script src="app.js?v=23" defer></script>
+</head>
+<body>
+  <header class="masthead">
+    <a class="brand" href="./index.html" aria-label="Traverse home"><span class="brand-mark" aria-hidden="true">↗</span> Traverse</a>
+    <span id="mode"></span>
+  </header>
+  <main class="layout is-home">
+    <aside id="session-nav" hidden>
+      <p class="nav-title">Cause &amp; effect</p>
+      <nav aria-label="Exercise progress">
+        <ol id="progress">
+          <li aria-current="step">The greenhouse</li>
+          <li>The bus route</li>
+          <li>Your conclusion</li>
+        </ol>
+      </nav>
+      <div class="method"><strong>Your reasoning tool</strong><p>When two things change together, look for a comparison that separates their effects.</p></div>
+    </aside>
+    <section id="exercise" aria-labelledby="heading"></section>
+  </main>
+  <nav class="tabs" aria-label="Main navigation">
+    <button type="button" data-tab="today" aria-current="page"><span aria-hidden="true">◉</span>Today</button>
+    <button type="button" data-tab="explore"><span aria-hidden="true">✧</span>Explore</button>
+    <button type="button" data-tab="progress"><span aria-hidden="true">↗</span>Progress</button>
+  </nav>
+  <template id="welcome">
+    <div class="welcome">
+      <div class="lesson-header"><h1 id="heading" tabindex="-1">Today’s problem</h1><span>~5 min</span></div>
+      <p class="intro">Learn a method in one discipline, then use it to investigate a problem in another.</p>
+      <section class="lesson" aria-labelledby="lesson-title">
+        <div class="lesson-copy"><h2 id="lesson-title">More tables, more waiting?</h2>
+        <p>Find what limits a restaurant’s lunch service, then use the same method in a print shop.</p></div>
+        <ol class="journey">
+          <li><b aria-hidden="true">▦</b><strong>Restaurant operations</strong><span>Orders at lunchtime</span></li>
+          <li><b aria-hidden="true">▤</b><strong>Print production</strong><span>Posters ready to ship</span></li>
+        </ol>
+      </section>
+      <button id="start" type="button">Start the investigation</button>
+      <button id="start-new" class="secondary" type="button" hidden>Start a new investigation</button>
+      <div class="path"><small>Your learning path</small><strong>Examine evidence and explanations</strong></div>
+    </div>
+  </template>
+  <template id="explore">
+    <h1 id="heading" tabindex="-1">Explore</h1>
+    <p class="scenario">Choose a reasoning skill to practise.</p>
+    <button id="explore-restaurant" class="explore-card" type="button"><strong>Find the bottleneck</strong><span>Investigate what limits a restaurant’s service.</span></button>
+    <button id="explore-lesson" class="explore-card" type="button"><strong>Examine evidence and explanations</strong><span>Test cause and effect across plant science and urban policy.</span></button>
+  </template>
+  <template id="learning-progress">
+    <h1 id="heading" tabindex="-1">My progress</h1>
+    <p class="scenario">See what you’ve practised across disciplines.</p>
+    <section class="feedback cloud" aria-label="Progress sync">
+      <strong>Sync across devices</strong>
+      <p id="sync-status" role="status"></p>
+      <p>Signing in with Google syncs your exercise progress, draft answers and saved hints to your account.</p>
+      <button id="sync-account" class="secondary" type="button">Sign in with Google</button>
+    </section>
+    <div class="feedback cloud"><strong>Cause and effect</strong><p id="progress-result"></p></div>
+    <div class="feedback cloud"><strong>Bottlenecks</strong><p id="restaurant-progress"></p></div>
+    <details><summary>Reported confidence</summary><p id="confidence-result"></p></details>
+  </template>
+  <template id="restaurant">
+    <p class="eyebrow">Find the bottleneck · Restaurant operations</p>
+    <h1 id="heading" tabindex="-1">More tables, more waiting?</h1>
+    <p class="scenario">The restaurant grows from 40 to 60 seats. At lunch it receives 50 orders per hour. The kitchen can prepare at most 35 orders per hour.</p>
+    <form id="restaurant-form">
+      <fieldset>
+        <legend>What should change to serve more orders at lunch?</legend>
+        <label class="option"><input type="radio" name="answer" value="tables" required> Add more tables.</label>
+        <label class="option"><input type="radio" name="answer" value="kitchen"> Increase the kitchen’s output.</label>
+        <label class="option"><input type="radio" name="answer" value="spread"> Spread the same customers across more tables.</label>
+      </fieldset>
+      <label class="field" for="restaurant-reason">What do you think is limiting service? <small>Optional · up to 160 characters</small></label>
+      <input id="restaurant-reason" maxlength="160">
+      <label class="field" for="restaurant-plan">What would you measure to test your idea? <small>Optional · up to 360 characters</small></label>
+      <textarea id="restaurant-plan" rows="3" maxlength="360"></textarea>
+      <button id="restaurant-example" class="secondary" type="button">Use an example plan</button>
+      <button type="submit">Check my answer</button>
+    </form>
+    <section id="restaurant-review" hidden aria-label="Tutor feedback">
+      <div id="restaurant-cloud-mount"></div>
+      <button id="restaurant-retry" class="secondary" type="button">Revise my answer</button>
+      <button id="restaurant-reveal" class="secondary" type="button">See the explanation</button>
+    </section>
+    <section id="restaurant-solution" class="feedback cloud" hidden aria-labelledby="restaurant-solution-title">
+      <h2 id="restaurant-solution-title" tabindex="-1">The kitchen is the bottleneck</h2>
+      <p>Fifty orders arrive each hour, and the kitchen can prepare at most 35. At least 15 orders join the queue per hour while those rates hold. Extra seats leave that limit in place.</p>
+      <p>Use the same method in another system by comparing the incoming workload with what each step can process over the same time.</p>
+      <button id="restaurant-transfer" type="button">Try it in a print shop</button>
+    </section>
+  </template>
+  <template id="validated-cloud-controls">
+      <div class="feedback" role="status"><strong id="case-local-label"></strong><p id="case-local-hint"></p></div>
+      <details id="case-cloud">
+        <summary>Request a cloud hint</summary>
+        <p>Review the exercise, your answers and the first hint before sending them to Gemini.</p>
+        <pre id="case-share"></pre>
+        <details id="case-debug" hidden>
+          <summary>Local test settings</summary>
+          <label class="field" for="restaurant-token">Temporary App Check debug token</label>
+          <input id="case-token" type="password" autocomplete="off">
+        </details>
+        <button id="case-send" type="button">Send and get a hint</button>
+        <div id="case-cloud-result" class="feedback cloud" role="status" hidden>
+          <strong id="case-hint-label"></strong><p id="case-hint"></p>
+        </div>
+      </details>
+      <details id="case-audit" hidden>
+        <summary>How this hint was checked</summary>
+        <ul id="case-checks"></ul>
+      </details>
+  </template>
+  <template id="print-shop">
+    <p class="eyebrow">Apply the method · Print production</p>
+    <h1 id="heading" tabindex="-1">Why are posters piling up?</h1>
+    <p class="scenario">A print shop receives orders for 100 posters per hour. Each poster is printed, trimmed, then packed.</p>
+    <div class="evidence" aria-label="Maximum station capacities">
+      <dl><dt>Print</dt><dd>90 posters per hour</dd></dl>
+      <dl><dt>Trim</dt><dd>60 posters per hour</dd></dl>
+      <dl><dt>Pack</dt><dd>80 posters per hour</dd></dl>
+    </div>
+    <form id="print-form">
+      <fieldset>
+        <legend>You can improve just one station. Which would you choose to ship more posters?</legend>
+        <label class="option"><input type="radio" name="station" value="print" required> Printing</label>
+        <label class="option"><input type="radio" name="station" value="trim"> Trimming</label>
+        <label class="option"><input type="radio" name="station" value="pack"> Packing</label>
+      </fieldset>
+      <label class="field" for="print-plan">What would you measure to test your choice? <small>Optional · up to 360 characters</small></label>
+      <textarea id="print-plan" maxlength="360" rows="3"></textarea>
+      <button type="submit">Check my answer</button>
+    </form>
+    <section id="print-feedback" hidden aria-label="Tutor feedback"><div id="print-cloud-mount"></div></section>
+    <section id="print-takeaway" class="lesson takeaway" aria-labelledby="print-takeaway-title" hidden>
+      <h2 id="print-takeaway-title" tabindex="-1">One method, two domains</h2>
+      <dl>
+        <div><dt>Restaurant</dt><dd>The kitchen’s 35 orders per hour limit what can be served.</dd></div>
+        <div><dt>Print shop</dt><dd>Trimming limits shipping to 60 posters per hour. If trimming rises above 80, packing becomes the next bottleneck.</dd></div>
+      </dl>
+      <p><strong>Use it again.</strong> Follow the work through each step and compare how much each can process over the same time.</p>
+      <button id="print-progress" class="secondary" type="button">See my progress</button>
+    </section>
+  </template>
+  <template id="greenhouse">
+    <p class="eyebrow">Learn the method · Plant science</p>
+    <h1 id="heading" tabindex="-1">What made the plants grow?</h1>
+    <p class="scenario">The fertilized plants grew faster. They were also the only plants in direct sunlight.</p>
+    <div class="evidence" aria-label="Greenhouse observations">
+      <dl><dt>Faster growth</dt><dd>Fertilizer</dd><dd>Direct sunlight</dd></dl>
+      <dl><dt>Slower growth</dt><dd>No fertilizer</dd><dd>No direct sunlight</dd></dl>
+    </div>
+    <form id="garden-form">
+      <fieldset>
+        <legend>Which experiment would best isolate the effect of fertilizer?</legend>
+        <label class="option"><input type="radio" name="garden" value="repeat" required> Repeat the experiment with more plants in the same two locations.</label>
+        <label class="option"><input type="radio" name="garden" value="same"> Give both groups the same light and fertilize only one group.</label>
+        <label class="option"><input type="radio" name="garden" value="both"> Give both groups the same fertilizer and change their light exposure.</label>
+      </fieldset>
+      <fieldset class="confidence">
+        <legend>How sure are you? <small>Optional</small></legend>
+        <div>
+          <label class="option"><input type="radio" name="confidence" value="35">35%</label>
+          <label class="option"><input type="radio" name="confidence" value="50">50%</label>
+          <label class="option"><input type="radio" name="confidence" value="70">70%</label>
+          <label class="option"><input type="radio" name="confidence" value="90">90%</label>
+        </div>
+      </fieldset>
+      <label class="field" for="garden-reason">What else could affect growth, and how? <small>Optional · one short sentence</small></label>
+      <input id="garden-reason" maxlength="160">
+      <button type="submit">Check my experiment</button>
+    </form>
+    <div id="garden-feedback" class="feedback" role="status" hidden></div>
+    <button id="go-city" hidden>Try the bus route</button>
+  </template>
+  <template id="city">
+    <p class="eyebrow">Apply the method · Urban policy</p>
+    <h1 id="heading" tabindex="-1">Did the bus reduce traffic?</h1>
+    <p class="scenario">A town opens a new bus route. Downtown traffic counts fall. A major downtown road closes the same week.</p>
+    <div class="evidence city-evidence" aria-label="City observations">
+      <dl><dt>Same week</dt><dd>Bus route opens</dd><dd>Major road closes</dd></dl>
+      <dl><dt>Observed result</dt><dd>Fewer cars counted downtown</dd></dl>
+    </div>
+    <p class="transfer"><strong>From the greenhouse to the city.</strong> The extra sunlight made it hard to tell whether fertilizer drove growth. Look for what plays the same role here.</p>
+    <form id="city-form">
+      <label class="field" for="reason">What else changed, and how might it affect the traffic count? <small>Optional · up to 160 characters</small></label>
+      <input id="reason" maxlength="160">
+      <label class="field" for="plan">How would you test your explanation? <small>Optional · up to 360 characters</small></label>
+      <textarea id="plan" maxlength="360" rows="3"></textarea>
+      <button id="sample" class="secondary" type="button">Use an example answer</button>
+      <button type="submit">Get a short hint</button>
+    </form>
+    <section id="review" aria-label="Tutor feedback" hidden>
+      <div class="feedback" role="status"><strong id="local-label"></strong><p id="local-text"></p></div>
+      <details id="advanced">
+        <summary>Compare with deeper feedback</summary>
+        <div id="cloud-options" hidden>
+          <p>Review what will be sent to Gemini in the cloud. The exercise text is included.</p>
+          <pre id="share-preview"></pre>
+          <button id="send-cloud" type="button">Send and analyze</button>
+        </div>
+        <p id="example-note" hidden>The example below uses prepared feedback. Live analysis requires Firebase configuration.</p>
+        <button id="show-example" class="secondary" type="button" hidden>Show prepared cloud example</button>
+        <div class="feedback cloud" id="cloud-result" role="status" hidden><strong id="cloud-label"></strong><p id="cloud-text"></p></div>
+      </details>
+      <button id="go-final" type="button">Choose a comparison</button>
+    </section>
+    <p id="city-status" role="status"></p>
+  </template>
+  <template id="conclusion">
+    <p class="eyebrow">Check your reasoning</p>
+    <h1 id="heading" tabindex="-1">Which comparison would you trust?</h1>
+    <p class="scenario">You want to estimate the effect of the bus route while accounting for the road closure.</p>
+    <form id="final-form">
+      <fieldset>
+        <legend>Pick the strongest design.</legend>
+        <label class="option"><input type="radio" name="final" value="downtown" required> Compare downtown traffic before and after the bus route opened.</label>
+        <label class="option"><input type="radio" name="final" value="nearby"> Compare traffic across downtown and neighboring streets before and after.</label>
+        <label class="option"><input type="radio" name="final" value="matched"> Compare before-and-after changes in two similar areas with comparable road closures, where only one gets a new bus route.</label>
+      </fieldset>
+      <button type="submit">Check my comparison</button>
+    </form>
+    <div id="final-feedback" class="feedback" role="status" hidden></div>
+    <section id="takeaway" class="lesson takeaway" aria-labelledby="takeaway-title" hidden>
+      <h2 id="takeaway-title">One method, two disciplines</h2>
+      <dl>
+        <div><dt>Plant science</dt><dd>Keep sunlight comparable to test the effect of fertilizer.</dd></div>
+        <div><dt>Urban policy</dt><dd>Compare areas with similar road closures to test the effect of the bus route.</dd></div>
+      </dl>
+      <p><strong>Use it again.</strong> When you hear that one change caused a result, ask what else changed and what comparison could separate their effects.</p>
+      <button id="restart" class="secondary" type="button">Return to lesson home</button>
+    </section>
+  </template>
+</body>
+</html>
